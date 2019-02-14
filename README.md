@@ -1,2 +1,2 @@
 # Stracktivity
-Visualize and analyse your  sports activites
+Visualize and analyse your  sports activities
