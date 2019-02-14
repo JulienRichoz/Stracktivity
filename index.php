@@ -24,7 +24,15 @@
 
         <div id="google-map"></div>
 	</div>
-
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('google-map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    </script>
     <!-- d3js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
 	<!-- Functions used for different operations -->
