@@ -32,6 +32,27 @@ function round(value, precision) {
     return Math.round(value * multiplier) / multiplier;
 }
 
+// Return the estimated time in seconds for a specifix activity,
+// distance, and elevations parameters.
+// source: http://www.gr5.fr/temps_marche/index.html
+function timeEstimation_s(activityType, distance_m,
+    elevationGain_m, elevationLoss_m) {
+
+    var A = (distance_m / 1000.0) / ActivityType.properties[activityType].flatSpeed_km_h;
+    var B = (elevationGain_m / ActivityType.properties[activityType].climbSpeed_m_h) +
+            (elevationLoss_m / ActivityType.properties[activityType].descentSpeed_m_h);
+
+    var tmp = (A + B) / 2;
+
+    // Convert result to time in seconds
+    var h = Math.floor(tmp);
+    tmp = (tmp - h) * 60;
+    var m = Math.floor(tmp);
+    var s = Math.round((tmp - m) * 60);
+
+    return h*3600 + m*60 + s;
+}
+
 // Read gpx fileUrl and return a track
 function getTrack(fileUrl) {
     var track;
