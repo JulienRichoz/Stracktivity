@@ -21,7 +21,7 @@ function initMap() {
 
     tracks = getTracks(files);
 
-
+    var selectedMarker = null;
 
     // Show each track represented by their activity type in the centroid of the track
     for (var i in tracks) {
@@ -43,6 +43,63 @@ function initMap() {
         track.marker = marker;
 
         bounds.extend(marker.position);
+        // Box displayed when marker is hovered
+        let contentString =
+            '<div id="content">' +
+            '<table>' +
+            '<tbody>' +
+            '<tr>' +
+            '<td style="width:40px;"><img width="35px" src="' + ActivityType.properties[track.activityType].icon_url + '"/></td>' +
+            '<td colspan="3"><b>' + track.name + '</b></td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td style="width:40px"><img width="30px" style="margin-top:2px" src="img/distance_icon.png"/></td>' +
+            '<td style="width:90px">' + round(track.distance_m / 1000, 1) + ' km</td>' +
+            '<td style="width:40px"><img width="20px" style="margin-top:0px" src="img/time_icon.png"/></td>' +
+            '<td style="width:90px">' + track.estimatedTime_s.toString().toHHhMM() + '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '<td style="width:40px"><img width="40px" style="margin-top:0px" src="img/elevation_gain_icon.png"/></td>' +
+            '<td style="width:90px">' + round(track.elevationGain_m, 0) + ' m</td>' +
+            '<td style="width:40px"><img width="40px" style="margin-top:0px" src="img/elevation_loss_icon.png"/></td>' +
+            '<td style="width:90px">' + round(track.elevationLoss_m, 0) + ' m</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>';
+        let infoTrack = new google.maps.InfoWindow({
+            content: contentString
+        });
+        track.infoTrack = infoTrack;
+
+        // Build track as a polyline
+        let poly = new google.maps.Polyline({
+            // use your own style here
+            path: track.points,
+            strokeColor: "#ff0090",
+            strokeOpacity: .7,
+            strokeWeight: 4
+        });
+        track.poly = poly;
+
+        /**
+       * On marker hover, display global track's data
+       */
+        marker.addListener('mouseover', function () {
+            if (selectedMarker != marker) {
+                infoTrack.open(map, marker);
+                poly.setMap(map);
+            }
+        });
+
+        /**
+        * On marker mouseout, hide global track's data
+        */
+        marker.addListener('mouseout', function () {
+            if (selectedMarker != marker) {
+                infoTrack.close(map, marker);
+                poly.setMap(null);
+            }
+        });
 
     }
     map.fitBounds(bounds);
