@@ -10,6 +10,22 @@ function computeCentroid(points) {
     return { lat: latitude / n, lng: longitude / n };
 }
 
+// return the distance between (lat1,lon1) and (lat2,lon2) in meter.
+// https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
+function GCDistance(lat1, lon1, lat2, lon2) {
+    var radius = 6378137.0 ; // earth radius in meter
+    var DE2RA = 0.01745329252; // degre to radian conversion
+    if (lat1 == lat2 && lon1 == lon2) return 0;
+    lat1 *= DE2RA;
+    lon1 *= DE2RA;
+    lat2 *= DE2RA;
+    lon2 *= DE2RA;
+    var d = Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2);
+    if (d >= 1)
+        return 0;
+    return (radius * Math.acos(d));
+};
+
 // https://stackoverflow.com/questions/7342957/how-do-you-round-to-1-decimal-place-in-javascript
 function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
