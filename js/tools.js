@@ -82,6 +82,58 @@ function getTrack(fileUrl) {
                 distance_m += d;
                 distances.push(distance_m);
             }
+            
+			// Compute speeds with jump 60
+			var speeds_jump_60 = [];
+            var jump = 60;
+            for(var j = jump; j < distances.length; j+=jump){
+				var d = distances[j] - distances[j-jump];
+                speeds_jump_60.push((d/1000)/((times[j]-times[j-jump]) / 1000 / 3600));
+            }
+
+			// Compute altitudes with jump 60
+			var altitudes_jump_60 = [];
+            var jump = 60;
+            for(var j = 0; j < elevations.length; j+=jump){
+                // altitudes
+                altitudes_jump_60.push(elevations[j]);
+                if (j+jump > elevations.length){
+                    altitudes_jump_60.push(elevations[elevations.length - 1]);
+					break;
+				}
+            }
+
+            // We can't compute elevation at each point because it becomes
+            // irrelevant (usually to high) as the GPS hasn't a trustable
+            // precision.
+            // So we decided to take elevation at every 60 points which
+            // represent one minute
+            var len = elevations.length;
+            var jump = 60;
+            for(var j = 0; j < elevations.length - 1; j+=jump){
+                // elevations
+                if (j+jump > len)
+                    break;
+                delta = elevations[j+jump] - elevations[j];
+				elevationGains.push(elevationGain_m);
+				elevationLosses.push(elevationLoss_m);
+                if (delta > 0)
+                    elevationGain_m += delta;
+                else
+                    elevationLoss_m -= delta;
+            }
+			elevationGains.push(elevationGain_m);
+			elevationLosses.push(elevationLoss_m);
+
+			// Calculate estimated times at each points
+			for(var j = 0; j < distances.length; j++){
+				estimatedTimes.push(timeEstimation_s(activityType, distances[j],
+					elevationGains[Math.floor(j/60)], elevationLosses[Math.floor(j/60)]));
+			}
+
+            // Compute time estimation
+            estimatedTime_s = timeEstimation_s(activityType, distance_m,
+                elevationGain_m, elevationLoss_m);
 
             track = new Track(name, activityType, points, distance_m, elevations,
                 centroid, elevationGain_m, elevationLoss_m, estimatedTime_s,
