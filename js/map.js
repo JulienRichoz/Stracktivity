@@ -1,37 +1,49 @@
+var tracks = []; // The list of all the tracks
 var map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById('google-map'), {
-    center: {lat: -34.397, lng: 150.644},
-    zoom: 8
-  });
-}
+var trailDetailsMap;
+var circle; // Track position marker
+var trackPoint; // google map Marker
+var trackerImage; // object using google map Size object
 
-$.ajax({
-    type: "GET",
-    url: "../gpx/Afternoon_Ride.gpx",
-    dataType: "xml",
-    success: function(xml) {
-      var points = [];
-      var bounds = new google.maps.LatLngBounds ();
-      $(xml).find("trkpt").each(function() {
-        var lat = $(this).attr("lat");
-        var lon = $(this).attr("lon");
-        var p = new google.maps.LatLng(lat, lon);
-        points.push(p);
-        bounds.extend(p);
-      });
-  
-      var poly = new google.maps.Polyline({
-        // use your own style here
-        path: points,
-        strokeColor: "#FF00AA",
-        strokeOpacity: .7,
-        strokeWeight: 4
-      });
-      
-      poly.setMap(map);
-      
-      // fit bounds to track
-      map.fitBounds(bounds);
+/** Initialize the map and the markers **/
+function initMap() {
+    $('[data-toggle="tooltip"]').tooltip(); //The Tooltip plugin is small pop-up box that appears when the user moves the mouse pointer over an element:
+
+    var bounds = new google.maps.LatLngBounds(); //representing a latitude/longitude aligned rectangle
+    map = new google.maps.Map(document.getElementById("google-map"))
+
+    //Files to work with..
+    var files = [
+        'Afternoon_Ride.gpx',
+        'VTT_2017-09-15_10-17-33.gpx',
+        'skitour_2017-11-26.gpx'
+    ];
+
+    tracks = getTracks(files);
+
+
+
+    // Show each track represented by their activity type in the centroid of the track
+    for (var i in tracks) {
+        let track = tracks[i];
+
+        let image = {
+            url: ActivityType.properties[track.activityType].marker_url,
+            // This marker is 20 pixels wide by 32 pixels high.
+            scaledSize: new google.maps.Size(45, 70),
+            anchor: new google.maps.Point(22, 70)
+        };
+
+        let marker = new google.maps.Marker({
+            position: track.centroid,
+            map: map,
+            icon: image
+        });
+
+        track.marker = marker;
+
+        bounds.extend(marker.position);
+
     }
-  });
+    map.fitBounds(bounds);
+}
