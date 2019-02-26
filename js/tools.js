@@ -32,6 +32,17 @@ function round(value, precision) {
     return Math.round(value * multiplier) / multiplier;
 }
 
+//Display time in string
+String.prototype.toHHhMM = function () {
+    var sec_num = parseInt(this, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    return hours+'h'+minutes;
+}
+
 // Return the estimated time in seconds for a specifix activity,
 // distance, and elevations parameters.
 // source: http://www.gr5.fr/temps_marche/index.html
