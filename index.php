@@ -60,6 +60,8 @@
 
 	<!-- d3js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+	<!-- Functions used for different operations -->
+	<script src="js/tools.js"></script>
 	<!-- Track class -->
 	<script src="js/track.js"></script>
 	<!-- Map showing all the tracks -->
