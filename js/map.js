@@ -49,6 +49,7 @@ function initMap() {
         track.marker = marker;
 
         bounds.extend(marker.position);
+
         // Box displayed when marker is hovered
         let contentString =
             '<div id="content">' +
@@ -142,28 +143,29 @@ function initMap() {
             }
             updateMarkers();
         });
+        google.maps.event.addListener(marker, 'click', (function () {
+            return function () {
+                let polyCpy = new google.maps.Polyline({
+                    // use your own style here
+                    path: track.points,
+                    strokeColor: "#ff0090",
+                    strokeOpacity: .7,
+                    strokeWeight: 4
+                });
+                $("#map").width("50%");
+                $("#map").height("50%");
+                $("#details").show();
+                $("#track").show();
+                google.maps.event.trigger(map, 'resize');
+                map.setCenter(marker.position);
+            }
+        }))
     }
 
     /**
        * On marker click, display below a new gmap with detailed informations
        */
-    google.maps.event.addListener(marker, 'click', (function () {
-        return function () {
-            let polyCpy = new google.maps.Polyline({
-                // use your own style here
-                path: track.points,
-                strokeColor: "#ff0090",
-                strokeOpacity: .7,
-                strokeWeight: 4
-            });
-            $("#map").width("50%");
-            $("#map").height("50%");
-            $("#details").show();
-            $("#track").show();
-            google.maps.event.trigger(map, 'resize');
-            map.setCenter(marker.position);
-        }
-    }))
+    
 
 
     map.fitBounds(bounds);
