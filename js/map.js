@@ -230,7 +230,7 @@ function initMap() {
     map.fitBounds(bounds);
 }
 
-// To code - Need D3.js ? 
+
 function drawSvg(track) {
     // Get the data
     var data = [];
@@ -241,8 +241,26 @@ function drawSvg(track) {
             data.push({ "altitude": track.altitudes_jump_60[i], "distance": track.distances[i * 60] });
         }
     }
+    // Set width and margin
+    var margin = {
+        top: 20,
+        right: 10,
+        bottom: 30,
+        left: 50
+    },
+        width = $('#data').width() - margin.left - margin.right,
+        height = 300 - margin.top - margin.bottom;
+
+    // Set X and Y
+    var x = d3.scale.linear()
+        .range([0, width]);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
 
 }
+
+
 
 // Function to hide marker + poly if we active filter
 function updateMarkers() {
