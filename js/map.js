@@ -101,6 +101,42 @@ function initMap() {
             }
         });
 
+                /**
+        * On marker mouseclick
+        */
+       marker.addListener('click', function() {
+        if(selectedMarker != marker){
+            if(selectedMarker != null && selectedInfoTrack != null && selectedPoly != null){
+                selectedInfoTrack.close(map, selectedMarker);
+                selectedPoly.setMap(null);
+            }
+            selectedMarker = marker;
+            selectedInfoTrack = infoTrack;
+            selectedPoly = poly;
+            infoTrack.open(map, marker);
+            poly.setMap(map);
+        } else{
+            infoTrack.close(map, marker);
+            poly.setMap(map);
+            selectedMarker = null;
+        }
+    });
+
+    // Handle track type filter click
+    $(".img-check").click(function(){
+        $(this).toggleClass("check");
+        if(parseInt($(this).attr("value")) == ActivityType.MTB){
+            filterMTB = !$(this).hasClass("check");
+        } else if(parseInt($(this).attr("value")) == ActivityType.HIKING){
+            filterHiking = !$(this).hasClass("check");
+        } else if(parseInt($(this).attr("value")) == ActivityType.SKITOUR){
+            filterSkitour = !$(this).hasClass("check");
+        } else if(parseInt($(this).attr("value")) == ActivityType.OTHER){
+            filterOther = !$(this).hasClass("check");
+        }
+        updateMarkers();
+    });
+
     }
     map.fitBounds(bounds);
 }
