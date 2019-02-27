@@ -232,6 +232,15 @@ function initMap() {
 
 // To code - Need D3.js ? 
 function drawSvg(track) {
+    // Get the data
+    var data = [];
+    for (var i = 0; i < track.altitudes_jump_60.length; i++) {
+        if (i * 60 > track.distances.length) {
+            data.push({ "altitude": track.altitudes_jump_60[i], "distance": track.distances[track.distances.length - 1] });
+        } else {
+            data.push({ "altitude": track.altitudes_jump_60[i], "distance": track.distances[i * 60] });
+        }
+    }
 
 }
 
