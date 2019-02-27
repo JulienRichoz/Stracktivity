@@ -143,8 +143,14 @@ function initMap() {
             }
             updateMarkers();
         });
+
+        /**
+       * On marker click, display below a new gmap with detailed informations
+       */
         google.maps.event.addListener(marker, 'click', (function () {
             return function () {
+
+                // Copy the same map above but then need to reduce both map for better display
                 let polyCpy = new google.maps.Polyline({
                     // use your own style here
                     path: track.points,
@@ -158,13 +164,18 @@ function initMap() {
                 $("#track").show();
                 google.maps.event.trigger(map, 'resize');
                 map.setCenter(marker.position);
+
+                 // Show trail
+                 trailDetailsMap = new google.maps.Map(
+                    document.getElementById("track"), {
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        streetViewControl: false,
+                    });
             }
         }))
     }
 
-    /**
-       * On marker click, display below a new gmap with detailed informations
-       */
+
     
 
 
