@@ -203,19 +203,7 @@ function initMap() {
                         map: trailDetailsMap,
                         icon: imageStart
                     });
-                    let contentStart = '<p>Cliquer pour itinéraire</p>';
-                    let infoStart = new google.maps.InfoWindow({
-                        content: contentStart
-                    });
-                    markerStart.addListener('mouseover', function () {
-                        // display infowindow
-                        infoStart.open(trailDetailsMap, this);
-                    });
-                    markerStart.addListener('mouseout', function () {
-                        // hide infowindow
-                        infoStart.close();
-                    });
-                    
+
                     let imageEnd = {
                         url: 'img/end_marker.png',
                         // This marker is 20 pixels wide by 32 pixels high.
@@ -228,6 +216,8 @@ function initMap() {
                         icon: imageEnd
                     });
                 }
+                // fit bounds to track
+                trailDetailsMap.fitBounds(boundsDetail);
 
                 // Resize the map and draw map (to code)
                 function resize() {
@@ -241,7 +231,7 @@ function initMap() {
 }
 
 // To code - Need D3.js ? 
-function drawSvg(track){
+function drawSvg(track) {
 
 }
 
