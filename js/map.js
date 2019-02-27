@@ -273,6 +273,41 @@ function drawSvg(track) {
     var y = d3.scale.linear()
         .range([height, 0]);
 
+    // define the area
+    var area = d3.svg.area()
+        .x(function (d) { return x(d.distance); })
+        .y0(height)
+        .y1(function (d) { return y(d.altitude); });
+
+    var color = d3.scale.category10();
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    var line = d3.svg.line()
+        .x(function (d) {
+            return x(d.distance);
+        })
+        .y(function (d) {
+            return y(d.altitude);
+        });
+    d3.select("#data").select("svg").remove();
+    var svg = d3.select("#data").append("svg")
+        .attr('id', 'elevation-graph')
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    color.domain(d3.keys(data[0]).filter(function (key) {
+        return key !== "distance";
+    }));
+
 }
 
 
