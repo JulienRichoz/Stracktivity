@@ -5,6 +5,12 @@ var circle; // Track position marker
 var trackPoint; // google map Marker
 var trackerImage; // object using google map Size object
 
+
+// Filters
+var filterMTB = false;
+var filterHiking = false;
+var filterSkitour = false;
+var filterOther = false;
 /** Initialize the map and the markers **/
 function initMap() {
     $('[data-toggle="tooltip"]').tooltip(); //The Tooltip plugin is small pop-up box that appears when the user moves the mouse pointer over an element:
@@ -101,42 +107,63 @@ function initMap() {
             }
         });
 
-                /**
+        /**
         * On marker mouseclick
         */
-       marker.addListener('click', function() {
-        if(selectedMarker != marker){
-            if(selectedMarker != null && selectedInfoTrack != null && selectedPoly != null){
-                selectedInfoTrack.close(map, selectedMarker);
-                selectedPoly.setMap(null);
+        marker.addListener('click', function () {
+            if (selectedMarker != marker) {
+                if (selectedMarker != null && selectedInfoTrack != null && selectedPoly != null) {
+                    selectedInfoTrack.close(map, selectedMarker);
+                    selectedPoly.setMap(null);
+                }
+                selectedMarker = marker;
+                selectedInfoTrack = infoTrack;
+                selectedPoly = poly;
+                infoTrack.open(map, marker);
+                poly.setMap(map);
+            } else {
+                infoTrack.close(map, marker);
+                poly.setMap(map);
+                selectedMarker = null;
             }
-            selectedMarker = marker;
-            selectedInfoTrack = infoTrack;
-            selectedPoly = poly;
-            infoTrack.open(map, marker);
-            poly.setMap(map);
-        } else{
-            infoTrack.close(map, marker);
-            poly.setMap(map);
-            selectedMarker = null;
-        }
-    });
+        });
 
-    // Handle track type filter click
-    $(".img-check").click(function(){
-        $(this).toggleClass("check");
-        if(parseInt($(this).attr("value")) == ActivityType.MTB){
-            filterMTB = !$(this).hasClass("check");
-        } else if(parseInt($(this).attr("value")) == ActivityType.HIKING){
-            filterHiking = !$(this).hasClass("check");
-        } else if(parseInt($(this).attr("value")) == ActivityType.SKITOUR){
-            filterSkitour = !$(this).hasClass("check");
-        } else if(parseInt($(this).attr("value")) == ActivityType.OTHER){
-            filterOther = !$(this).hasClass("check");
-        }
-        updateMarkers();
-    });
-
+        // Handle track type filter click
+        $(".img-check").click(function () {
+            $(this).toggleClass("check");
+            if (parseInt($(this).attr("value")) == ActivityType.MTB) {
+                filterMTB = !$(this).hasClass("check");
+            } else if (parseInt($(this).attr("value")) == ActivityType.HIKING) {
+                filterHiking = !$(this).hasClass("check");
+            } else if (parseInt($(this).attr("value")) == ActivityType.SKITOUR) {
+                filterSkitour = !$(this).hasClass("check");
+            } else if (parseInt($(this).attr("value")) == ActivityType.OTHER) {
+                filterOther = !$(this).hasClass("check");
+            }
+            updateMarkers();
+        });
     }
+
     map.fitBounds(bounds);
+}
+
+
+// Function to hide marker + poly if we active filter
+function updateMarkers() {
+    for (i in tracks) {
+        if ((tracks[i].activityType == ActivityType.MTB && filterMTB == true) ||
+            (tracks[i].activityType == ActivityType.HIKING && filterHiking == true) ||
+            (tracks[i].activityType == ActivityType.SKITOUR && filterSkitour == true) ||
+            (tracks[i].activityType == ActivityType.OTHER && filterOther == true)) {
+            if (tracks[i].marker.getMap() != null) {
+                tracks[i].marker.setMap(null);
+                tracks[i].poly.setMap(null);
+            }
+        } else {
+            if (tracks[i].marker.getMap() == null) {
+                tracks[i].marker.setMap(map);
+                tracks[i].infoTrack.close(map, tracks[i].marker);
+            }
+        }
+    }
 }
