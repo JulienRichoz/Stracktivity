@@ -37,7 +37,13 @@
 		<label class="filter" style="bottom: 190px;"><img src="img/hiking_icon.png" alt="Hiking" class="img-thumbnail img-check check" value="2"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
 		<label class="filter" style="bottom: 130px;"><img src="img/skitour_icon.png" alt="Ski Tour" class="img-thumbnail img-check check" value="3"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
 		<label class="filter" style="bottom: 70px;"><img src="img/other_icon.png" alt="Other" class="img-thumbnail img-check check" value="4"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
+	
+	<div id="sliders">
+			<div class="dropup">
+			</div>
+		</div>
 	</div>
+	
 
 	<div id="track"></div>
 	<div id="details">
