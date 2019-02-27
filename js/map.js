@@ -219,6 +219,21 @@ function initMap() {
                 // fit bounds to track
                 trailDetailsMap.fitBounds(boundsDetail);
 
+                // Show global data of track
+                $('#track-icon').attr('src', ActivityType.properties[track.activityType].icon_url);
+                $('#track-title').text(track.name);
+                $('#track-distance').text(round(track.distance_m / 1000, 1) + ' km');
+                $('#track-duration').text(track.estimatedTime_s.toString().toHHhMM());
+                $('#track-elevation-gain').text(round(track.elevationGain_m, 0) + ' m');
+                $('#track-elevation-loss').text(round(track.elevationLoss_m, 0) + ' m');
+                $('#track-export').attr('href', track.fileUrl);
+
+                $('#track-export').click(function (e) {
+                    $(this).blur();
+                });
+
+                drawSvg(track);
+
                 // Resize the map and draw map (to code)
                 function resize() {
                     drawSvg(track);
