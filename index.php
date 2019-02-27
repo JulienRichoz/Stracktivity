@@ -40,16 +40,77 @@
 	</div>
 
 	<div id="track"></div>
-
 	<div id="details">
 		<div id="data">
+			<div class="row" style="background-color: #f4f4f4;padding:0px">
+				<div class="col-md-5" style="text-align: left">
+					<img id="track-icon" style="float: left;width: 20%;padding:  5px;" src="img/mtb_icon.png"/>
+					<div style="float:left; width:80%">
+						 <h4 id="track-title">Test - Rasse - SainteCroix</h4>
+						 <p id="track-date">Fevrier 2019</p>
+					 </div>
+				</div>
+
+				<div id="properties" class="col-md-4" style="padding:5px">
+
+					<table  cellpadding="2">
+						<tbody>
+							<tr>
+								<td><img style="width:30px" src="img/distance_icon.png"/></td>
+								<td id="track-distance">80km</td>
+								<td><img style="width:20px; margin-left:10px" src="img/time_icon.png"/></td>
+								<td id="track-duration">23h39</td>
+							</tr>
+							<tr>
+								<td><img style="width:40px" src="img/elevation_gain_icon.png"/></td>
+								<td id="track-elevation-gain">10000 m</td>
+								<td><img style="width:40px; margin-left:10px" src="img/elevation_loss_icon.png"/></td>
+								<td id="track-elevation-loss">10000 m</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 
 			<h4>Profil du parcours</h4>
 		</div>
 
 		<div id="progress-bars">
-		
+			<table width="100%">
+				<tr>
+					<td width="75px"><b>Distance</b></td>
+					<td>
+						<div class="progress-bar-outside">
+							<div class="progress-bar-inside" id="distance-progress-bar"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="75px"><b>Durée</b></td>
+					<td>
+
+						<div class="progress-bar-outside">
+							<div class="progress-bar-inside" id="duration-progress-bar"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="75px"><b>Montée</b></td>
+					<td>
+						<div class="progress-bar-outside">
+							<div class="progress-bar-inside" id="elevation-gain-progress-bar"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td width="75px"><b>Descente</b></td>
+					<td>
+						<div class="progress-bar-outside">
+							<div class="progress-bar-inside" id="elevation-loss-progress-bar"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 
