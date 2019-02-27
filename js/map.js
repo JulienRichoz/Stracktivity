@@ -334,32 +334,66 @@ function drawSvg(track) {
 
     // Draw X Line
     svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis)
-    .append("text")
-    .attr("transform", "translate(" + width + ", 0)")
-    .attr("y", -15)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Distance (m)");
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append("text")
+        .attr("transform", "translate(" + width + ", 0)")
+        .attr("y", -15)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Distance (m)");
 
     // Draw Y Line
     svg.append("g")
-    .attr("class", "y axis")
-    .call(yAxis)
-    .append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 6)
-    .attr("dy", ".71em")
-    .style("text-anchor", "end")
-    .text("Altitude (m)");
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Altitude (m)");
 
     // add the area
     svg.append("path")
         .data([data])
         .attr("class", "area")
         .attr("d", area);
+
+    // Vertical Line 
+    var mouseG = svg.append("g")
+        .attr("class", "mouse-over-effects");
+
+    mouseG.append("path") // this is the black vertical line to follow mouse
+        .attr("class", "mouse-line")
+        .style("stroke", "black")
+        .style("stroke-width", "1px")
+        .style("opacity", "0");
+
+
+    // append a rect to catch mouse movements on canvas
+    mouseG.append('svg:rect')
+        .attr('width', width) // can't catch mouse events on a g element
+        .attr('height', height)
+        .attr('fill', 'none')
+        .attr('pointer-events', 'all')
+        .on('mouseover', function () { // on mouse in show line, circles and text
+            d3.select(".mouse-line")
+                .style("opacity", "1");
+
+            trackPoint.setMap(trailDetailsMap);
+
+        })
+        .on('mousemove', function () { // mouse moving over canvas
+            var mouse = d3.mouse(this);
+            d3.select(".mouse-line")
+                .attr("d", function () {
+                    var d = "M" + mouse[0] + "," + height;
+                    d += " " + mouse[0] + "," + 0;
+                    return d;
+                });
+        });
 }
 
 
