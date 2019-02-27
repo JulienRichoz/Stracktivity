@@ -165,18 +165,36 @@ function initMap() {
                 google.maps.event.trigger(map, 'resize');
                 map.setCenter(marker.position);
 
-                 // Show trail
-                 trailDetailsMap = new google.maps.Map(
+                // Show trail
+                trailDetailsMap = new google.maps.Map(
                     document.getElementById("track"), {
                         mapTypeId: google.maps.MapTypeId.ROADMAP,
                         streetViewControl: false,
                     });
+
+                // Init trackPoint
+                trackerImage = {
+                    url: "img/tracker_marker.png",
+                    scaledSize: new google.maps.Size(16, 16),
+                    anchor: new google.maps.Point(8, 8)
+                };
+                trackPoint = new google.maps.Marker({
+                    map: trailDetailsMap,
+                    icon: trackerImage
+                });
+
+                var boundsDetail = new google.maps.LatLngBounds();
+                for (var j in track.points) {
+                    boundsDetail.extend(track.points[j]);
+                }
+
+                polyCpy.setMap(trailDetailsMap);
             }
         }))
     }
 
 
-    
+
 
 
     map.fitBounds(bounds);
