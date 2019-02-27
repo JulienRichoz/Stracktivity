@@ -308,6 +308,30 @@ function drawSvg(track) {
         return key !== "distance";
     }));
 
+    var cities = color.domain().map(function (name) {
+        return {
+            name: name,
+            values: data
+        };
+    });
+
+    x.domain(d3.extent(data, function (d) {
+        return d.distance;
+    }));
+
+    y.domain([
+        d3.min(cities, function (c) {
+            return d3.min(c.values, function (v) {
+                return v.altitude;
+            });
+        }),
+        d3.max(cities, function (c) {
+            return d3.max(c.values, function (v) {
+                return v.altitude;
+            });
+        })
+    ]);
+
     // Draw X Line
     svg.append("g")
     .attr("class", "x axis")
@@ -331,7 +355,13 @@ function drawSvg(track) {
     .style("text-anchor", "end")
     .text("Altitude (m)");
 
+    // add the area
+    svg.append("path")
+        .data([data])
+        .attr("class", "area")
+        .attr("d", area);
 }
+
 
 
 
