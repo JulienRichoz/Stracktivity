@@ -308,6 +308,29 @@ function drawSvg(track) {
         return key !== "distance";
     }));
 
+    // Draw X Line
+    svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+    .append("text")
+    .attr("transform", "translate(" + width + ", 0)")
+    .attr("y", -15)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Distance (m)");
+
+    // Draw Y Line
+    svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Altitude (m)");
+
 }
 
 
