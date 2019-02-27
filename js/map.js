@@ -189,17 +189,61 @@ function initMap() {
                 }
 
                 polyCpy.setMap(trailDetailsMap);
+
+                // Show start and end marker
+                if (track.points.length > 0) {
+                    let imageStart = {
+                        url: 'img/start_marker.png',
+                        // This marker is 20 pixels wide by 32 pixels high.
+                        scaledSize: new google.maps.Size(40, 40),
+                        anchor: new google.maps.Point(40, 40)
+                    };
+                    let markerStart = new google.maps.Marker({
+                        position: track.points[0],
+                        map: trailDetailsMap,
+                        icon: imageStart
+                    });
+                    let contentStart = '<p>Cliquer pour itinéraire</p>';
+                    let infoStart = new google.maps.InfoWindow({
+                        content: contentStart
+                    });
+                    markerStart.addListener('mouseover', function () {
+                        // display infowindow
+                        infoStart.open(trailDetailsMap, this);
+                    });
+                    markerStart.addListener('mouseout', function () {
+                        // hide infowindow
+                        infoStart.close();
+                    });
+                    
+                    let imageEnd = {
+                        url: 'img/end_marker.png',
+                        // This marker is 20 pixels wide by 32 pixels high.
+                        scaledSize: new google.maps.Size(30, 30),
+                        anchor: new google.maps.Point(0, 30)
+                    };
+                    let markerEnd = new google.maps.Marker({
+                        position: track.points[track.points.length - 1],
+                        map: trailDetailsMap,
+                        icon: imageEnd
+                    });
+                }
+
+                // Resize the map and draw map (to code)
+                function resize() {
+                    drawSvg(track);
+                }
+                window.addEventListener("resize", resize);
             }
-        }))
+        })(marker, i))
     }
-
-
-
-
-
     map.fitBounds(bounds);
 }
 
+// To code - Need D3.js ? 
+function drawSvg(track){
+
+}
 
 // Function to hide marker + poly if we active filter
 function updateMarkers() {
