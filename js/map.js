@@ -355,6 +355,8 @@ function drawSvg(track) {
         .style("text-anchor", "end")
         .text("Altitude (m)");
 
+        
+
     // add the area
     svg.append("path")
         .data([data])
@@ -371,6 +373,26 @@ function drawSvg(track) {
         .style("stroke-width", "1px")
         .style("opacity", "0");
 
+        var lines = document.getElementsByClassName('line');
+    var mousePerLine = mouseG.selectAll('.mouse-per-line')
+    .data(cities)
+    .enter()
+    .append("g")
+    .attr("class", "mouse-per-line");
+
+    mousePerLine.append("circle")
+    .attr("r", 7)
+    .style("stroke", function (d) {
+        return color(d.name);
+    })
+    .style("fill", "none")
+    .style("stroke-width", "1px")
+    .style("opacity", "0");
+
+mousePerLine.append("text")
+    .attr("transform", "translate(10,3)");
+
+
 
     // append a rect to catch mouse movements on canvas
     mouseG.append('svg:rect')
@@ -378,12 +400,26 @@ function drawSvg(track) {
         .attr('height', height)
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
+        .on('mouseout', function () { // on mouse out hide line, circles and text
+            d3.select(".mouse-line")
+                .style("opacity", "0");
+            d3.selectAll(".mouse-per-line circle")
+                .style("opacity", "0");
+            d3.selectAll(".mouse-per-line text")
+                .style("opacity", "0");
+                
+            trackPoint.setMap(null);
+        })
+
         .on('mouseover', function () { // on mouse in show line, circles and text
             d3.select(".mouse-line")
                 .style("opacity", "1");
+            d3.selectAll(".mouse-per-line circle")
+                .style("opacity", "1");
+            d3.selectAll(".mouse-per-line text")
+                .style("opacity", "1");
 
             trackPoint.setMap(trailDetailsMap);
-
         })
         .on('mousemove', function () { // mouse moving over canvas
             var mouse = d3.mouse(this);
@@ -392,6 +428,7 @@ function drawSvg(track) {
                     var d = "M" + mouse[0] + "," + height;
                     d += " " + mouse[0] + "," + 0;
                     return d;
+                    
                 });
         });
 }
