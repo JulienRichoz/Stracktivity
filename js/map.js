@@ -168,7 +168,7 @@ function initMap() {
                 // Show trail
                 trailDetailsMap = new google.maps.Map(
                     document.getElementById("track"), {
-                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        mapTypeId: google.maps.MapTypeId.TERRAIN,
                         streetViewControl: false,
                     });
 
