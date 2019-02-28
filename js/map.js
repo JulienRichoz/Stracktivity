@@ -355,7 +355,19 @@ function drawSvg(track) {
         .style("text-anchor", "end")
         .text("Altitude (m)");
 
-        
+    var city = svg.selectAll(".city")
+        .data(cities)
+        .enter().append("g")
+        .attr("class", "city");
+
+    city.append("path")
+        .attr("class", "line")
+        .attr("d", function (d) {
+            return line(d.values);
+        })
+        .style("stroke", function (d) {
+            return color(d.name);
+        });
 
     // add the area
     svg.append("path")
@@ -373,26 +385,24 @@ function drawSvg(track) {
         .style("stroke-width", "1px")
         .style("opacity", "0");
 
-        var lines = document.getElementsByClassName('line');
+    var lines = document.getElementsByClassName('line');
     var mousePerLine = mouseG.selectAll('.mouse-per-line')
-    .data(cities)
-    .enter()
-    .append("g")
-    .attr("class", "mouse-per-line");
+        .data(cities)
+        .enter()
+        .append("g")
+        .attr("class", "mouse-per-line");
 
     mousePerLine.append("circle")
-    .attr("r", 7)
-    .style("stroke", function (d) {
-        return color(d.name);
-    })
-    .style("fill", "none")
-    .style("stroke-width", "1px")
-    .style("opacity", "0");
+        .attr("r", 7)
+        .style("stroke", function (d) {
+            return color(d.name);
+        })
+        .style("fill", "none")
+        .style("stroke-width", "1px")
+        .style("opacity", "0");
 
-mousePerLine.append("text")
-    .attr("transform", "translate(10,3)");
-
-
+    mousePerLine.append("text")
+        .attr("transform", "translate(10,3)");
 
     // append a rect to catch mouse movements on canvas
     mouseG.append('svg:rect')
@@ -407,7 +417,7 @@ mousePerLine.append("text")
                 .style("opacity", "0");
             d3.selectAll(".mouse-per-line text")
                 .style("opacity", "0");
-                
+
             trackPoint.setMap(null);
         })
 
@@ -428,13 +438,47 @@ mousePerLine.append("text")
                     var d = "M" + mouse[0] + "," + height;
                     d += " " + mouse[0] + "," + 0;
                     return d;
-                    
+                });
+            d3.selectAll(".mouse-per-line")
+                .attr("transform", function (d, i) {
+                    var xDate = x.invert(mouse[0]),
+                        bisect = d3.bisector(function (d) { return d.distance; }).right;
+                    idx = bisect(d.values, xDate);
+
+                    var beginning = 0,
+                        end = lines[i].getTotalLength(),
+                        target = null;
+
+                    while (true) {
+                        target = Math.floor((beginning + end) / 2);
+                        pos = lines[i].getPointAtLength(target);
+                        if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                            break;
+                        }
+                        if (pos.x > mouse[0]) end = target;
+                        else if (pos.x < mouse[0]) beginning = target;
+                        else break; //position found
+                    }
+                    d3.select(this).select('text')
+                        .text(y.invert(pos.y).toFixed(2) + 'm');
+
+                    // Display the point on map
+                    // Find the right distances
+                    var distPos = 0;
+                    for (distPos = 0; distPos < track.distances.length; distPos++) {
+                        if (x.invert(pos.x).toFixed(2) < track.distances[distPos]) {
+                            break;
+                        }
+                    }
+                    var point = track.points[distPos];
+
+                    // To avoid resizing the circle, use a marker instead
+                    trackPoint.setPosition(point);
+
+                    return "translate(" + mouse[0] + "," + pos.y + ")";
                 });
         });
 }
-
-
-
 
 // Function to hide marker + poly if we active filter
 function updateMarkers() {
