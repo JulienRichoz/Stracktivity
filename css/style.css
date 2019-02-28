@@ -62,3 +62,26 @@ body {
 .label_checkbox {
 	display: none;
 }
+
+.area {
+    fill: rgba(176,196,222,0.5);
+}
+
+.axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+
+    
