@@ -487,6 +487,9 @@ function drawSvg(track) {
 
                     return "translate(" + mouse[0] + "," + pos.y + ")";
                 });
+        }).on('mouseout', function () { // mouse moving over canvas
+            $("#progress-bars").slideUp();
+
         });
 }
 
