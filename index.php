@@ -7,7 +7,7 @@
 
 <head>
 	<title>Stracktivity</title>
-<meta name="viewport" content="initial-scale=1.0">
+	<meta name="viewport" content="initial-scale=1.0">
 	<meta charset="utf-8">
 	<link rel="icon" href="logo.png">
 	<link href="css/style.css" rel="stylesheet" type="text/css">
@@ -25,6 +25,7 @@
 	<!-- chart js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
 	<script src="js/env.js"></script>
+
 	<!--<script src="js/charts2.0.js"></script>-->
 </head>
 
@@ -33,44 +34,52 @@
 
 		<div id="google-map"></div>
 
-		<label class="filter" style="bottom: 250px;"><img src="img/mtb_icon.png" alt="Mountain Bike" class="img-thumbnail img-check check" value="1"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
-		<label class="filter" style="bottom: 190px;"><img src="img/hiking_icon.png" alt="Hiking" class="img-thumbnail img-check check" value="2"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
-		<label class="filter" style="bottom: 130px;"><img src="img/skitour_icon.png" alt="Ski Tour" class="img-thumbnail img-check check" value="3"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
-		<label class="filter" style="bottom: 70px;"><img src="img/other_icon.png" alt="Other" class="img-thumbnail img-check check" value="4"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
-	
-	<div id="sliders">
-			<div class="dropup">
-			</div>
+
+		<label class="filter" style="bottom: 250px;"><img src="img/mtb_icon.png" alt="Mountain Bike" class="img-thumbnail img-check check"
+			 value="1"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
+		<label class="filter" style="bottom: 190px;"><img src="img/hiking_icon.png" alt="Hiking" class="img-thumbnail img-check check"
+			 value="2"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
+		<label class="filter" style="bottom: 130px;"><img src="img/skitour_icon.png" alt="Ski Tour" class="img-thumbnail img-check check"
+			 value="3"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
+		<label class="filter" style="bottom: 70px;"><img src="img/other_icon.png" alt="Other" class="img-thumbnail img-check check"
+			 value="4"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
+		<form class ="filter" style="bottom: 0px;" method="post" enctype="multipart/form-data">
+   			<input type="file" name="files[]" multiple>
+    		<input type="submit" value="Upload File" name="submit">
+		</form>
+		<div id="sliders">
+		<div class="dropup">
+		</div>
 		</div>
 	</div>
-	
+
 
 	<div id="track"></div>
 	<div id="details">
 		<div id="data">
 			<div class="row" style="background-color: #f4f4f4;padding:0px">
 				<div class="col-md-5" style="text-align: left">
-					<img id="track-icon" style="float: left;width: 20%;padding:  5px;" src="img/mtb_icon.png"/>
+					<img id="track-icon" style="float: left;width: 20%;padding:  5px;" src="img/mtb_icon.png" />
 					<div style="float:left; width:80%">
-						 <h4 id="track-title">Test - Rasse - SainteCroix</h4>
-						 <p id="track-date">Fevrier 2019</p>
-					 </div>
+						<h4 id="track-title">Test - Rasse - SainteCroix</h4>
+						<p id="track-date">Fevrier 2019</p>
+					</div>
 				</div>
 
 				<div id="properties" class="col-md-4" style="padding:5px">
 
-					<table  cellpadding="2">
+					<table cellpadding="2">
 						<tbody>
 							<tr>
-								<td><img style="width:30px" src="img/distance_icon.png"/></td>
+								<td><img style="width:30px" src="img/distance_icon.png" /></td>
 								<td id="track-distance">80km</td>
-								<td><img style="width:20px; margin-left:10px" src="img/time_icon.png"/></td>
+								<td><img style="width:20px; margin-left:10px" src="img/time_icon.png" /></td>
 								<td id="track-duration">23h39</td>
 							</tr>
 							<tr>
-								<td><img style="width:40px" src="img/elevation_gain_icon.png"/></td>
+								<td><img style="width:40px" src="img/elevation_gain_icon.png" /></td>
 								<td id="track-elevation-gain">10000 m</td>
-								<td><img style="width:40px; margin-left:10px" src="img/elevation_loss_icon.png"/></td>
+								<td><img style="width:40px; margin-left:10px" src="img/elevation_loss_icon.png" /></td>
 								<td id="track-elevation-loss">10000 m</td>
 							</tr>
 						</tbody>
@@ -119,8 +128,7 @@
 			</table>
 		</div>
 	</div>
-
-
+	<script src="js/upload.js"></script>
 	<!-- d3js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
 	<!-- Functions used for different operations -->
@@ -132,6 +140,7 @@
 	<!-- google maps api -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_MAPS_KEY; ?>&libraries=visualization&callback=initMap"
 	 async defer></script>
+	<script src="dir.php"></script>
 </body>
 
 </html>
