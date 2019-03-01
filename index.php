@@ -128,7 +128,10 @@
 			</table>
 		</div>
 	</div>
-	<script src="js/upload.js"></script>
+	<!-- Upload gpx file -->
+	<script src="fileManager/upload.js"></script>
+	<!-- Load dynmically gpx file from source -->
+	<script src="fileManager/dir.php"></script>
 	<!-- d3js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
 	<!-- Functions used for different operations -->
@@ -138,9 +141,7 @@
 	<!-- Map showing all the tracks -->
 	<script src="js/map.js"></script>
 	<!-- google maps api -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_MAPS_KEY; ?>&libraries=visualization&callback=initMap"
-	 async defer></script>
-	<script src="dir.php"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_MAPS_KEY; ?>&libraries=visualization&callback=initMap" async defer></script>
 </body>
 
 </html>
