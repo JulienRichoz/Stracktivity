@@ -470,10 +470,26 @@ function drawSvg(track) {
                     // To avoid resizing the circle, use a marker instead
                     trackPoint.setPosition(point);
 
+                    // Update the progress bars
+                    $("#distance-progress-bar").width(Math.floor(100 * x.invert(pos.x).toFixed(2) / track.distance_m).toString() + "%");
+                    $("#distance-progress-bar").text(Math.round(x.invert(pos.x).toFixed(2)) + "m");
+
+                    $("#duration-progress-bar").width(Math.floor(100 * track.estimatedTimes[distPos] / track.estimatedTime_s).toString() + "%");
+                    $("#duration-progress-bar").text(track.estimatedTimes[distPos].toString().toHHhMM());
+
+                    $("#elevation-gain-progress-bar").width(Math.floor(100 * track.elevationGains[Math.floor(distPos / 60)] / track.elevationGain_m).toString() + "%");
+                    $("#elevation-gain-progress-bar").text(Math.round(track.elevationGains[Math.floor(distPos / 60)]) + "m");
+
+                    $("#elevation-loss-progress-bar").width(Math.floor(100 * track.elevationLosses[Math.floor(distPos / 60)] / track.elevationLoss_m).toString() + "%");
+                    $("#elevation-loss-progress-bar").text(Math.round(track.elevationLosses[Math.floor(distPos / 60)]) + "m");
+                    $("#progress-bars").slideDown();
+
+
                     return "translate(" + mouse[0] + "," + pos.y + ")";
                 });
         });
 }
+
 
 // Function to hide marker + poly if we active filter
 function updateMarkers() {
