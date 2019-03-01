@@ -43,13 +43,13 @@
 			 value="3"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
 		<label class="filter" style="bottom: 70px;"><img src="img/other_icon.png" alt="Other" class="img-thumbnail img-check check"
 			 value="4"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
-		<form class ="filter" style="bottom: 0px;" method="post" enctype="multipart/form-data">
-   			<input type="file" name="files[]" multiple>
-    		<input type="submit" value="Upload File" name="submit">
+		<form class="filter" style="bottom: 0px;" method="post" enctype="multipart/form-data">
+			<input type="file" name="files[]" multiple>
+			<input type="submit" value="Upload File" name="submit">
 		</form>
 		<div id="sliders">
-		<div class="dropup">
-		</div>
+			<div class="dropup">
+			</div>
 		</div>
 	</div>
 
@@ -85,8 +85,12 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="col-md-3">
+					<a id="track-export" href="#" download style="margin-top:15px" type="button" class="btn btn-danger btn-lg" data-toggle="tooltip" data-placement="bottom" title="Exporter GPX">
+						<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+					</a>
+				</div>
 			</div>
-
 			<h4>Profil du parcours</h4>
 		</div>
 
@@ -103,7 +107,6 @@
 				<tr>
 					<td width="75px"><b>Durée</b></td>
 					<td>
-
 						<div class="progress-bar-outside">
 							<div class="progress-bar-inside" id="duration-progress-bar"></div>
 						</div>
@@ -141,7 +144,8 @@
 	<!-- Map showing all the tracks -->
 	<script src="js/map.js"></script>
 	<!-- google maps api -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_MAPS_KEY; ?>&libraries=visualization&callback=initMap" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?= GOOGLE_MAPS_KEY; ?>&libraries=visualization&callback=initMap"
+	 async defer></script>
 </body>
 
 </html>
