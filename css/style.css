@@ -63,6 +63,7 @@ body {
 	display: none;
 }
 
+
 .area {
     fill: rgba(176,196,222,0.5);
 }
@@ -83,5 +84,48 @@ body {
       stroke: steelblue;
       stroke-width: 1.5px;
     }
+
+/* Progress bars */
+#progress-bars{
+	display: none;
+	width: 100%;
+	padding: 10px;
+	padding-right: 20px;
+}
+#progress-bars td{
+	text-align: left;
+}
+.progress-bar-inside {
+    width: 0%;
+    height: 30px;
+    text-align: center; /* To center it horizontally (if you want) */
+    line-height: 30px; /* To center it vertically */
+    color: white;
+}
+#distance-progress-bar{
+    background-color: #6734BA;
+}
+#duration-progress-bar{
+    background-color: #89C540;
+}
+#elevation-gain-progress-bar{
+    background-color: #FFCB21;
+}
+#elevation-loss-progress-bar{
+    background-color: #F77C00;
+}
+.progress-bar-outside {
+	margin-right: 100px;
+	margin: 10px;
+    width: 100%;
+    background-color: #a0a0a0;
+}
+#gradient{
+	width: 0;
+	height: 0;
+	margin-bottom: 20px;
+	border-bottom: 100px solid red;
+	border-left: 100px solid transparent;
+}
 
     
