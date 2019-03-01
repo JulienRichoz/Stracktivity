@@ -61,8 +61,8 @@
 				<div class="col-md-5" style="text-align: left">
 					<img id="track-icon" style="float: left;width: 20%;padding:  5px;" src="img/mtb_icon.png" />
 					<div style="float:left; width:80%">
-						<h4 id="track-title">Test - Rasse - SainteCroix</h4>
-						<p id="track-date">Fevrier 2019</p>
+						<h4 id="track-title"></h4>
+						<p id="track-date"></p>
 					</div>
 				</div>
 
@@ -72,15 +72,15 @@
 						<tbody>
 							<tr>
 								<td><img style="width:30px" src="img/distance_icon.png" /></td>
-								<td id="track-distance">80km</td>
+								<td id="track-distance"></td>
 								<td><img style="width:20px; margin-left:10px" src="img/time_icon.png" /></td>
-								<td id="track-duration">23h39</td>
+								<td id="track-duration"></td>
 							</tr>
 							<tr>
 								<td><img style="width:40px" src="img/elevation_gain_icon.png" /></td>
-								<td id="track-elevation-gain">10000 m</td>
+								<td id="track-elevation-gain"></td>
 								<td><img style="width:40px; margin-left:10px" src="img/elevation_loss_icon.png" /></td>
-								<td id="track-elevation-loss">10000 m</td>
+								<td id="track-elevation-loss"></td>
 							</tr>
 						</tbody>
 					</table>
