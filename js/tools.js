@@ -98,7 +98,6 @@ function getTrack(fileUrl) {
             $(xml).find("type").each(function () {
                 var code = $(this).text();
                 for (let i in ActivityType) {
-                    console.log(ActivityType.properties[ActivityType[i]].code)
                     if (code == ActivityType.properties[ActivityType[i]].code) {
                         activityType = ActivityType[i];
                         break;
