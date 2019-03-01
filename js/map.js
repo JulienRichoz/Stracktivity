@@ -19,13 +19,8 @@ function initMap() {
     map = new google.maps.Map(document.getElementById("google-map"))
 
     //Files to work with..
-    var files = [
-        'Afternoon_Ride.gpx',
-        'VTT_2017-09-15_10-17-33.gpx',
-        'skitour_2017-11-26.gpx'
-    ];
 
-    tracks = getTracks(files);
+    tracks = getTracks(getFiles); //Get all gpx file (function in ./dir.php)
 
     var selectedMarker = null;
 
