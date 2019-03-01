@@ -3,7 +3,7 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['files'])) {
         $errors = [];
-        $path = 'gpx/';
+        $path = '../gpx/';
         $extensions = ['gpx'];
 
         $all_files = count($_FILES['files']['tmp_name']);
