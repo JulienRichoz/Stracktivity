@@ -45,7 +45,7 @@
 			 value="4"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
 		<form class="filter" style="bottom: 0px;" method="post" enctype="multipart/form-data">
 			<input type="file" name="files[]" multiple>
-			<input type="submit" value="Upload File" name="submit">
+			<input type="submit" value="Upload GPX" name="submit">
 		</form>
 		<div id="sliders">
 			<div class="dropup">
