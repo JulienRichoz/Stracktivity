@@ -13,7 +13,7 @@ function computeCentroid(points) {
 // return the distance between (lat1,lon1) and (lat2,lon2) in meter.
 // https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
 function GCDistance(lat1, lon1, lat2, lon2) {
-    var radius = 6378137.0 ; // earth radius in meter
+    var radius = 6378137.0; // earth radius in meter
     var DE2RA = 0.01745329252; // degre to radian conversion
     if (lat1 == lat2 && lon1 == lon2) return 0;
     lat1 *= DE2RA;
@@ -35,12 +35,12 @@ function round(value, precision) {
 //Display time in string
 String.prototype.toHHhMM = function () {
     var sec_num = parseInt(this, 10); // don't forget the second param
-    var hours   = Math.floor(sec_num / 3600);
+    var hours = Math.floor(sec_num / 3600);
     var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
 
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    return hours+'h'+minutes;
+    if (hours < 10) { hours = "0" + hours; }
+    if (minutes < 10) { minutes = "0" + minutes; }
+    return hours + 'h' + minutes;
 }
 
 // Return the estimated time in seconds for a specifix activity,
@@ -51,7 +51,7 @@ function timeEstimation_s(activityType, distance_m,
 
     var A = (distance_m / 1000.0) / ActivityType.properties[activityType].flatSpeed_km_h;
     var B = (elevationGain_m / ActivityType.properties[activityType].climbSpeed_m_h) +
-            (elevationLoss_m / ActivityType.properties[activityType].descentSpeed_m_h);
+        (elevationLoss_m / ActivityType.properties[activityType].descentSpeed_m_h);
 
     var tmp = (A + B) / 2;
 
@@ -61,7 +61,7 @@ function timeEstimation_s(activityType, distance_m,
     var m = Math.floor(tmp);
     var s = Math.round((tmp - m) * 60);
 
-    return h*3600 + m*60 + s;
+    return h * 3600 + m * 60 + s;
 }
 
 // Read gpx fileUrl and return a track
@@ -96,7 +96,12 @@ function getTrack(fileUrl) {
 
             // Get activity type
             $(xml).find("type").each(function () {
-                var code = $(this).text();
+                var code = 'other' //To avoid all error if <type></type> in gpx file is special chars for x reason
+                if ($(this).text() > 0) {
+                    code = ActivityType.properties[Number($(this).text())].code
+                }
+                else code = $(this).text();
+
                 for (let i in ActivityType) {
                     if (code == ActivityType.properties[ActivityType[i]].code) {
                         activityType = ActivityType[i];
@@ -129,25 +134,25 @@ function getTrack(fileUrl) {
                 distance_m += d;
                 distances.push(distance_m);
             }
-            
-			// Compute speeds with jump 60
-			var speeds_jump_60 = [];
+
+            // Compute speeds with jump 60
+            var speeds_jump_60 = [];
             var jump = 60;
-            for(var j = jump; j < distances.length; j+=jump){
-				var d = distances[j] - distances[j-jump];
-                speeds_jump_60.push((d/1000)/((times[j]-times[j-jump]) / 1000 / 3600));
+            for (var j = jump; j < distances.length; j += jump) {
+                var d = distances[j] - distances[j - jump];
+                speeds_jump_60.push((d / 1000) / ((times[j] - times[j - jump]) / 1000 / 3600));
             }
 
-			// Compute altitudes with jump 60
-			var altitudes_jump_60 = [];
+            // Compute altitudes with jump 60
+            var altitudes_jump_60 = [];
             var jump = 60;
-            for(var j = 0; j < elevations.length; j+=jump){
+            for (var j = 0; j < elevations.length; j += jump) {
                 // altitudes
                 altitudes_jump_60.push(elevations[j]);
-                if (j+jump > elevations.length){
+                if (j + jump > elevations.length) {
                     altitudes_jump_60.push(elevations[elevations.length - 1]);
-					break;
-				}
+                    break;
+                }
             }
 
             // We can't compute elevation at each point because it becomes
@@ -157,26 +162,26 @@ function getTrack(fileUrl) {
             // represent one minute
             var len = elevations.length;
             var jump = 60;
-            for(var j = 0; j < elevations.length - 1; j+=jump){
+            for (var j = 0; j < elevations.length - 1; j += jump) {
                 // elevations
-                if (j+jump > len)
+                if (j + jump > len)
                     break;
-                delta = elevations[j+jump] - elevations[j];
-				elevationGains.push(elevationGain_m);
-				elevationLosses.push(elevationLoss_m);
+                delta = elevations[j + jump] - elevations[j];
+                elevationGains.push(elevationGain_m);
+                elevationLosses.push(elevationLoss_m);
                 if (delta > 0)
                     elevationGain_m += delta;
                 else
                     elevationLoss_m -= delta;
             }
-			elevationGains.push(elevationGain_m);
-			elevationLosses.push(elevationLoss_m);
+            elevationGains.push(elevationGain_m);
+            elevationLosses.push(elevationLoss_m);
 
-			// Calculate estimated times at each points
-			for(var j = 0; j < distances.length; j++){
-				estimatedTimes.push(timeEstimation_s(activityType, distances[j],
-					elevationGains[Math.floor(j/60)], elevationLosses[Math.floor(j/60)]));
-			}
+            // Calculate estimated times at each points
+            for (var j = 0; j < distances.length; j++) {
+                estimatedTimes.push(timeEstimation_s(activityType, distances[j],
+                    elevationGains[Math.floor(j / 60)], elevationLosses[Math.floor(j / 60)]));
+            }
 
             // Compute time estimation
             estimatedTime_s = timeEstimation_s(activityType, distance_m,
