@@ -43,12 +43,36 @@
 			 value="3"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
 		<label class="filter" style="bottom: 70px;"><img src="img/other_icon.png" alt="Other" class="img-thumbnail img-check check"
 			 value="4"><input type="checkbox" class="label_checkbox" autocomplete="off"></label>
-		<form class="filter" style="bottom: 0px;" method="post" enctype="multipart/form-data">
+		<form class="filter" style="bottom: 10px;" method="post" enctype="multipart/form-data">
 			<input type="file" name="files[]" multiple>
 			<input type="submit" value="Upload GPX" name="submit">
 		</form>
 		<div id="sliders">
 			<div class="dropup">
+				<img src="img/sliders.png" alt="Mountain Bike" class="sliders-dropdown-toggle img-thumbnail dropdown-toggle" data-toggle="dropdown" value="1">
+				<div class="dropdown-menu" role="menu" style="padding: 15px;min-width: 250px;">
+						<p>
+							Distance:
+							<span id="distance" style="border:0; color:#f6931f; font-weight:bold;"></span>
+						</p>
+						<div id="distance-slider" class="slider"></div>
+						<p>
+							Durée:
+							<span id="duration" style="border:0; color:#f6931f; font-weight:bold;"></span>
+						</p>
+						<div id="duration-slider" class="slider"></div>
+						<p>
+							Gain en altitude:
+							<span id="elevation-gain" style="border:0; color:#f6931f; font-weight:bold;"></span>
+						</p>
+						<div id="elevation-gain-slider" class="slider"></div>
+						<p>
+							Perte d'alitude:
+							<span id="elevation-loss" style="border:0; color:#f6931f; font-weight:bold;"></span>
+						</p>
+						<div id="elevation-loss-slider" class="slider"></div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
