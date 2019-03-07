@@ -19,7 +19,6 @@ function initMap() {
     map = new google.maps.Map(document.getElementById("google-map"))
 
     //Files to work with..
-
     tracks = getTracks(getFiles); //Get all gpx file (function in ./dir.php)
 
     var selectedMarker = null;
@@ -124,27 +123,13 @@ function initMap() {
             }
         });
 
-        // Handle track type filter click
-        $(".img-check").click(function () {
-            $(this).toggleClass("check");
-            if (parseInt($(this).attr("value")) == ActivityType.MTB) {
-                filterMTB = !$(this).hasClass("check");
-            } else if (parseInt($(this).attr("value")) == ActivityType.HIKING) {
-                filterHiking = !$(this).hasClass("check");
-            } else if (parseInt($(this).attr("value")) == ActivityType.SKITOUR) {
-                filterSkitour = !$(this).hasClass("check");
-            } else if (parseInt($(this).attr("value")) == ActivityType.OTHER) {
-                filterOther = !$(this).hasClass("check");
-            }
-            updateMarkers();
-        });
+
 
         /**
        * On marker click, display below a new gmap with detailed informations
        */
         google.maps.event.addListener(marker, 'click', (function () {
             return function () {
-
                 // Copy the same map above but then need to reduce both map for better display
                 let polyCpy = new google.maps.Polyline({
                     // use your own style here
@@ -237,6 +222,20 @@ function initMap() {
             }
         })(marker, i))
     }
+    // Handle track type filter click
+    $(".img-check").click(function () {
+        $(this).toggleClass("check");
+        if (parseInt($(this).attr("value")) == ActivityType.MTB) {
+            filterMTB = !$(this).hasClass("check");
+        } else if (parseInt($(this).attr("value")) == ActivityType.HIKING) {
+            filterHiking = !$(this).hasClass("check");
+        } else if (parseInt($(this).attr("value")) == ActivityType.SKITOUR) {
+            filterSkitour = !$(this).hasClass("check");
+        } else if (parseInt($(this).attr("value")) == ActivityType.OTHER) {
+            filterOther = !$(this).hasClass("check");
+        }
+        updateMarkers();
+    });
     map.fitBounds(bounds);
 }
 
