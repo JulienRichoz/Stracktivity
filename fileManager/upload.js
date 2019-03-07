@@ -17,6 +17,7 @@ form.addEventListener('submit', e => {
         method: 'POST',
         body: formData
     }).then(response => {
+        console.log(response)
         //location.reload();
     });
 });
