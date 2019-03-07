@@ -86,6 +86,4 @@ class Track {
         this.altitudes_jump_60 = altitudes_jump_60;
         this.fileUrl = fileUrl;
     }
-
-
 };
