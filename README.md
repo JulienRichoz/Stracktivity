@@ -18,8 +18,7 @@ Visualize and analyse your  sports activities
 - Run server (need to be in Stracktivity project)
 `# php -S localhost:8080`
 
-### Don't forget to
-In case you want to upload big file :
+### In case you want to upload big files on Stracktivity (>2MB)
 If you use php server, don't forget to change the maximum upload file in your php.ini config
 ```
 Maximum allowed size for uploaded files.
@@ -28,6 +27,8 @@ upload_max_filesize = 40M;
 Must be greater than or equal to upload_max_filesize
 post_max_size = 40M;
 ```
+For other server, please refer to his documentation
+
 ## Technologies
 HTML, CSS, Javascript
 
